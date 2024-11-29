@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrar producto</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css}" href="/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/dist/css/adminlte.min.css}" href="/AdminLTE-3.2.0/dist/css/adminlte.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Libreria Sweetallert2-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}" href="/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" href="/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}" href="/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+
+    <!-- jQuery -->
+    <script th:src="@{/AdminLTE-3.2.0/plugins/jquery/jquery.min.js}" src="/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+</head>
+<body class="hold-transition sidebar">
+
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Bodega Alvarez</a>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-expanded">
+        <!-- Brand Logo -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="" class="img-circle elevation-2" alt="">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block"><?php echo $nombres_sesion;?></a>
+                </div>
+            </div>
+
+            <div th:insert="sidebar.html"></div>
+        </div>
+
+    </aside>
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1 class="m-0">Datos del producto:<span th:text="${proveedor.nombre}"></span></h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">¿Esta seguro que quieres editar los datos del producto?</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body" style="display: block;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form th:action="@{/proveedor/editar/{idProveedor}}" th:object="${proveedor}" method="post">
+                                        <input type="hidden" th:field="*{idProveedor}" th:value="${proveedor.idProveedor}" />
+
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <div class="row">
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label >Nombre del Proveedor:</label>
+                                                            <div style="display: flex">
+                                                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <label >Apellido del proveedor:</label>
+                                                            <input id="apellido"  th:field="*{apellido}"  class="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label >Dirección</label>
+                                                        <input type="text" id="direccion" th:field="*{direccion}" class="form-control"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label >Telefono:</label>
+                                                            <input type="number" id="telefono" th:field="*{stock}" class="form-control"/>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label >RUC</label>
+                                                            <input type="text" id="ruc" th:field="*{ruc}" class="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label >Fecha de ingreso:</label>
+                                                            <input type="text"  th:value="${producto.fechaRegistro}" class="form-control" disabled />                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label >Imagen del producto</label>
+                                                    <center>
+                                                        <img src="" width="100%" alt="">
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <hr>
+                                        <div class="form-group">
+                                            <a href="index.php" class="btn btn-secondary">Cancelar</a>
+                                            <button type="submit" class="btn btn-success"><i class="fas fa-pencil-alt"></i>Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Bootstrap 4 -->
+<script th:src="@{/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js}" src="/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/AdminLTE-3.2.0/dist/js/adminlte.min.js}" src="/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
+
+<!-- DataTables & Plugins -->
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js}" src="/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/jszip/jszip.min.js}" src="/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js}" src="/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js}" src="/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+</body>
+</html>

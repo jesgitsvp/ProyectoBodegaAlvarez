@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+
+
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+
+
+
+
+        <li class="nav-item">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    Empleados
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/empleado/listar}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de empleados</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/empleado/listado}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Crear empleado</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-address-card"></i>
+                <p>
+                    Clientes
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/cliente/listar}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de Clientes</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/cliente/listado}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Crear cliente</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tags"></i>
+                <p>
+                    Categorías
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/categoria/listar}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de categorías</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/categoria/listado}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Crear categoria</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tags"></i>
+                <p>
+                    Ventas
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/venta/listar}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de ventas</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/venta/listado}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Crear venta</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                    Productos
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/producto/listar}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de productos</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/producto/listado}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Crear producto</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-cart-plus"></i>
+                <p>
+                    Compras
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/compra/listar}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de compras</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/compra/listado}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Crear compra</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+        <li class="nav-item ">
+            <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-car"></i>
+                <p>
+                    Proveedores
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a th:href="@{/proveedor/listar}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Listado de proveedores</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/proveedor/listado}" class="nav-link">                                    <i class="far fa-circle nav-icon"></i>
+                        <p>Crear proveedor</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+    </ul>
+</nav>
+
+<!-- /.sidebar-menu -->
+
+
+</body>
+</html>

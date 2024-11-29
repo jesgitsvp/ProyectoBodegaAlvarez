@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar compra</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css}" href="/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/dist/css/adminlte.min.css}" href="/aAdminLTE-3.2.0/dist/css/adminlte.min.css">
+
+    <!-- Libreria Sweetallert2-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css}" href="/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css}" href="/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" th:href="@{/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}" href="/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+    <!-- jQuery -->
+
+    <script th:src="@{/AdminLTE-3.2.0/plugins/jquery/jquery.min.js}" src="/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar">
+
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Bodega Alvarez</a>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-expanded">
+        <!-- Brand Logo -->
+        <div class="sidebar">
+            <!-- Sidebar user panel (optional) -->
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image">
+                    <img src="" class="img-circle elevation-2" alt="">
+                </div>
+                <div class="info">
+                    <a href="#" class="d-block"><?php echo $nombres_sesion;?></a>
+                </div>
+            </div>
+
+            <div th:insert="sidebar.html"></div>
+        </div>
+
+    </aside>
+
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1 class="m-0">Registro de una nueva compra</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Llene los datos con cuidado</h3>
+                        </div>
+                        <div class="card-body" style="display: block;">
+                            <div style="display: flex">
+                                <h5>Datos del producto </h5>
+                                <div style="width: 20px"></div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-buscar_producto">
+                                    <i class="fa fa-search"></i>
+                                    Buscar producto
+                                </button>
+                                <div class="modal fade" id="modal-buscar_producto">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: #1d36b6;color: white">
+                                                <h4 class="modal-title">Busqueda del producto</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table table-responsive">
+                                                    <table id="example" class="table table-bordered table-striped table-sm">
+                                                        <thead>
+                                                        <tr>
+
+                                                            <th><center>Selecionar</center></th>
+                                                            <th><center>Nro</center></th>
+                                                            <th><center>Categoría</center></th>
+                                                            <th><center>Nombre</center></th>
+                                                            <th><center>Imagen</center></th>
+                                                            <th><center>Stock</center></th>
+                                                            <th><center>Precio compra</center></th>
+                                                            <th><center>Precio venta</center></th>
+                                                            <th><center>Fecha compra</center></th>
+
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+
+                                                        <tr th:each="producto : ${productos}">
+
+                                                            <td>
+                                                                <button class="seleccionarProductoBtn form-control" th:attr="data-idpro=${producto.idProducto},data-nombre=${producto.nombre}, data-precio=${producto.costo}, data-stock=${producto.stock}, data-categoria=${producto.idCategoria}" onclick="seleccionarProducto(this)" >Seleccionar</button>
+
+                                                            </td>
+                                                            <td th:text="${producto.idProducto}"></td>
+                                                            <td th:text="${producto.idCategoria}"></td>
+                                                            <td th:text="${producto.nombre}"></td>
+                                                            <td>
+                                                                <img src="" width="50px" alt="asdf">
+                                                            </td>
+                                                            <td th:text="${producto.stock}"><center></center></td>
+                                                            <td th:text="${producto.costo}"></td>
+                                                            <td th:text="${producto.precio}"></td>
+                                                            <td th:text="${producto.fechaRegistro}"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+                            </div>
+                            <br>
+                            <div class="row" style="font-size: 12px">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Categoría:</label>
+                                                <div style="display: flex">
+                                                    <input class="invisible" style="display: none;" id="idProductoInput">
+                                                    <input class="form-control" id="categoriaProductoInput" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Nombre del producto:</label>
+                                                <input type="text" name="nombre" id="nombreProductoInput" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Precio compra:</label>
+                                                <input type="number" name="costo" id="precioProductoInput" class="form-control" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Cantidad:</label>
+                                                <input type="number" name="cantidad" id="cantidad" class="form-control" style=""  min="1" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+
+                                            <div class="form-group">
+                                                <label for="">Stock:</label>
+                                                <input type="number" name="stock" id="stockProductoInput" class="form-control" style="   background-color: #fff819" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <br>
+
+                            <div style="display: flex">
+                                <h5>Datos del proveedor </h5>
+                                <div style="width: 20px"></div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#modal-buscar_proveedor">
+                                    <i class="fa fa-search"></i>
+                                    Buscar proveedor
+                                </button>
+                                <!-- modal para visualizar datos de los proveedor -->
+                                <div class="modal fade" id="modal-buscar_proveedor">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="background-color: #1d36b6;color: white">
+                                                <h4 class="modal-title">Busqueda de proveedor</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="table table-responsive">
+                                                    <table id="example2" class="table table-bordered table-striped table-sm">
+                                                        <thead>
+                                                        <tr>
+                                                            <th><center>Selecionar</center></th>
+                                                            <th><center>Nro</center></th>
+                                                            <th><center>Nombre del proveedor</center></th>
+                                                            <th><center>Celular</center></th>
+                                                            <th><center>RUC</center></th>
+                                                            <th><center>Dirección</center></th>
+                                                            <th><center>Fecha de registro</center></th>
+
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <tr th:each="proveedor : ${proveedores}">
+
+                                                            <td>
+                                                                <button class="btn btn-info" th:id="'btn_seleccionar_proveedor_' + ${proveedor.idProveedor}">
+                                                                    Selecionar
+                                                                </button>
+                                                            </td>
+                                                            <td th:text="${proveedor.idProveedor}"><center></center></td>
+                                                            <td th:text="${proveedor.nombre}"></td>
+                                                            <td th:text="${proveedor.telefono}"></td>
+                                                            <td th:text="${proveedor.RUC}"></td>
+                                                            <td th:text="${proveedor.direccion}"></td>
+                                                            <td th:text="${proveedor.fechaRegistro}"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+                            </div>
+
+                            <br>
+
+                            <div class="row" style="font-size: 12px">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" id="id_proveedor" hidden>
+                                                <label for="">Nombre</label>
+                                                <input type="text" id="nombreproveedor" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Celular</label>
+                                                <input type="text" id="celularproveedor" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button onclick="agregarProducto()" class="btn btn-primary">Agregar Producto</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Detalle Compra</h3>
+                            </div>
+                            <div class="col-md-12 d-flex" style="margin-top:15px">
+                                <label style="margin:20px">Número de serie:   </label>
+                                <input type="text" id="Numseriecompra">
+                            </div>
+
+                            <div class="card-body" style="display: block;">
+                                <div class="table table-responsive">
+                                    <table id="tablaProductos" class="table-hover col-md-12">
+                                        <thead>
+                                        <tr>
+                                            <th><center>Nro</center></th>
+                                            <th><center>Producto</center></th>
+                                            <th><center>Precio</center></th>
+                                            <th><center>Cantidad</center></th>
+                                            <th><center>Subtotal</center></th>
+                                            <th><center>Acciones</center></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer d-flex">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary"  id="Generarcompra">Generar compra</button>
+                                        <button class="btn btn-warning" >Cancelar</button>
+                                    </div>
+                                    <div class="col-md-3 ml-auto">
+                                        <input type="text" name="txttotal" id="totalpagar" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- Bootstrap 4 -->
+<script th:src="@{/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js}" src="/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/AdminLTE-3.2.0/dist/js/adminlte.min.js}" src="/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
+
+<!-- DataTables & Plugins -->
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js}" src="/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/jszip/jszip.min.js}" src="/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js}" src="/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js}" src="/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script th:src="@{/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js}" src="/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+    function seleccionarProducto(btn) {
+        // Obtener los datos del producto seleccionado desde los atributos personalizados
+        var nombreProducto = btn.getAttribute('data-nombre');
+        var precioProducto = btn.getAttribute('data-precio');
+        var categoriaProducto = btn.getAttribute('data-categoria');
+        var stockProducto = btn.getAttribute('data-stock');
+        var idProduc = btn.getAttribute('data-idpro');
+
+
+        // Actualizar los campos de entrada con los datos del producto
+        document.getElementById('nombreProductoInput').value = nombreProducto;
+        document.getElementById('precioProductoInput').value = precioProducto;
+        document.getElementById('categoriaProductoInput').value = categoriaProducto;
+        document.getElementById('stockProductoInput').value = stockProducto;
+        document.getElementById('idProductoInput').value = idProduc;
+
+    }
+</script>
+
+
+
+<script>
+    var numeroFila = 1;
+    var productos = [];
+
+    function agregarProducto() {
+        // Obtener el idProducto del formulario
+        var idProducto = document.getElementById("idProductoInput").value;
+
+        // Verificar si el input de cantidad está vacío
+        var cantidadInput = document.getElementById("cantidad");
+        var cantidadValor = cantidadInput.value.trim();
+
+        if (cantidadValor === "") {
+            alert("Ingrese una cantidad antes de agregar el producto.");
+            return;
+        }
+
+        // Obtener el stock del producto del input
+        var stockDisponible = parseInt(document.getElementById("stockProductoInput").value);
+
+        // Verificar si el producto ya está en la tabla
+        var productoExistente = productos.find(producto => producto.idProducto === idProducto);
+
+        if (productoExistente) {
+            // Si el producto ya existe, actualiza la cantidad y el subtotal en el array y en la tabla
+            var cantidadExistente = productoExistente.cantidad;
+            var cantidadNueva = parseInt(cantidadValor);
+
+            // Verificar si la nueva cantidad supera el stock disponible
+            if (cantidadExistente + cantidadNueva > stockDisponible) {
+                alert("No hay suficiente stock disponible.");
+                return;
+            }
+
+            productoExistente.cantidad = cantidadExistente + cantidadNueva;
+            productoExistente.subtotal = parseFloat(productoExistente.precio) * productoExistente.cantidad;
+            actualizarFila(productoExistente);
+
+        } else {
+            // Si el producto no existe, agrégalo a la tabla y al array
+            var categoria = document.getElementById("categoriaProductoInput").value;
+            var nombre = document.getElementById("nombreProductoInput").value;
+            var precio = document.getElementById("precioProductoInput").value;
+            var cantidad = parseInt(cantidadValor);
+
+            // Verificar si la cantidad supera el stock disponible
+            if (cantidad > stockDisponible) {
+                alert("No hay suficiente stock disponible.");
+                return;
+            }
+
+            // Calcular el subtotal
+            var subtotal = parseFloat(precio) * cantidad;
+
+            // Crear un objeto producto
+            var producto = {
+                idProducto: idProducto,
+                categoria: categoria,
+                nombre: nombre,
+                precio: precio,
+                cantidad: cantidad,
+                subtotal: subtotal
+            };
+
+            // Agregar el producto al array y a la tabla
+            productos.push(producto);
+            agregarFila(producto);
+        }
+
+        // Limpiar los campos del formulario después de agregar el producto
+        cantidadInput.value = "";
+        actualizarTotal();
+    }
+
+    function agregarFila(producto) {
+        // Obtener la tabla
+        var tabla = document.getElementById("tablaProductos");
+
+        // Crear una nueva fila y agregar celdas
+        var fila = tabla.insertRow();
+        fila.innerHTML = `<td>${numeroFila}</td>
+                          <td style="display: none;">${producto.idProducto}</td>
+                          <td>${producto.nombre}</td>
+                          <td>${producto.precio}</td>
+                          <td class="cantidad">${producto.cantidad}</td>
+                          <td>${producto.subtotal}</td>
+                          <td>
+                              <div class="btn-group">
+                                  <button class="btn btn-danger" onclick="eliminarFila(this)">Borrar</button>
+                              </div>
+                          </td>`;
+
+        numeroFila++;
+        actualizarTotal();
+    }
+
+    function actualizarFila(producto) {
+        // Obtener la tabla
+        var tabla = document.getElementById("tablaProductos");
+
+        // Buscar la fila correspondiente al producto
+        var filas = tabla.getElementsByTagName("tr");
+        for (var i = 1; i < filas.length; i++) {
+            var celdas = filas[i].getElementsByTagName("td");
+            var idProductoEnFila = celdas[1].innerText;
+
+            if (idProductoEnFila === producto.idProducto) {
+                // Actualizar la cantidad, el subtotal y la celda de cantidad en la fila
+                celdas[4].innerText = producto.cantidad;
+                celdas[5].innerText = producto.subtotal;
+                return;
+            }
+        }
+        actualizarTotal();
+    }
+
+    function eliminarFila(button) {
+        var fila = button.parentNode.parentNode.parentNode;
+        var tabla = fila.parentNode;
+        var rowIndex = fila.rowIndex;
+
+        // Obtener el idProducto de la fila a eliminar
+        var idProductoEliminar = fila.cells[1].innerText;
+
+        // Eliminar la fila de la tabla
+        tabla.deleteRow(rowIndex);
+
+        // Reiniciar el contador global y actualizar las filas restantes
+        numeroFila = 1;
+        for (var i = 1; i < tabla.rows.length; i++) {
+            tabla.rows[i].cells[0].innerText = numeroFila++;
+        }
+
+        // Eliminar el producto del array
+        productos = productos.filter(producto => producto.idProducto !== idProductoEliminar);
+
+        actualizarTotal();
+    }
+
+    function actualizarTotal() {
+        // Obtener el input totalpagar
+        var totalPagarInput = document.getElementById("totalpagar");
+
+        // Calcular el total sumando los subtotales de los productos
+        var total = 0;
+        productos.forEach(function (producto) {
+            total += producto.subtotal;
+        });
+
+        // Actualizar el valor del input totalpagar
+        totalPagarInput.value = total;
+
+
+    }
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
